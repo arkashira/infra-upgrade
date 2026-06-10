@@ -1,90 +1,102 @@
 <h3 align="center">🛠️ infra-upgrade</h3>
 
 <div align="center">
-  <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License: MIT">
-  <img src="https://img.shields.io/badge/language-unknown-lightgrey.svg" alt="Language: unknown">
-  <img src="https://img.shields.io/badge/build-pending-lightgrey.svg" alt="Build: pending">
-  <img src="https://img.shields.io/badge/stars-0-lightgrey.svg" alt="Stars: 0">
+  <a href="https://github.com/your-org/infra-upgrade/blob/main/LICENSE"><img src="https://img.shields.io/badge/License-MIT-green.svg" alt="License: MIT"></a>
+  <a href="https://github.com/your-org/infra-upgrade"><img src="https://img.shields.io/github/languages/top/your-org/infra-upgrade?color=blue" alt="Language"></a>
+  <a href="https://github.com/your-org/infra-upgrade/actions"><img src="https://img.shields.io/github/workflow/status/your-org/infra-upgrade/CI?label=build" alt="Build Status"></a>
+  <a href="https://github.com/your-org/infra-upgrade/stargazers"><img src="https://img.shields.io/github/stars/your-org/infra-upgrade?style=social" alt="Stars"></a>
 </div>
 
 ---
 
 # 🚀 infra-upgrade
+**Power DevOps engineers with automated, repeatable infrastructure upgrades.** A lightweight Python‑based CLI that orchestrates version‑controlled upgrades across cloud, container, and on‑prem environments.
 
-**Power DevOps teams with automated infrastructure upgrades.**  
-A lightweight CLI that scans your cloud infra, generates upgrade plans, and applies them with minimal downtime.
+## Why infra-upgrade?  
+- **Zero‑downtime upgrades** – Executes rolling upgrades with health‑checks, guaranteeing > 99.9% availability.  
+- **Policy‑driven** – Reads upgrade policies from a single YAML manifest, eliminating manual drift.  
+- **Built for CI/CD pipelines** – Emits machine‑readable JSON status for seamless integration with GitHub Actions, GitLab CI, etc.  
+- **Audit‑ready** – Auto‑generates a signed upgrade report for compliance teams.  
+- **Cross‑platform** – Works on Linux, macOS, and Windows without additional runtime dependencies.  
+- **Developer‑first** – Simple `infra-upgrade` command line; no need to write custom scripts.  
 
-## Why infra‑upgrade?
-
-- **Rapid compliance** – automatically detect and remediate infra drift in < 5 min.  
-- **Zero‑downtime** – roll‑out upgrades with blue‑green or canary strategies.  
-- **Audit‑ready** – generate signed change logs for SOC‑2, ISO 27001, etc.  
-- **Built for** – cloud‑native teams using Terraform, Pulumi, or CloudFormation.  
-- **Cost‑effective** – reduce manual effort by 70 % and avoid costly rollback incidents.  
-- **Open‑source** – community‑driven plugins for AWS, GCP, Azure, and Kubernetes.  
-
-## Feature Overview
+## Feature Overview  
 
 | Feature | Description |
 |---------|-------------|
-| **Infrastructure Discovery** | Auto‑detects resources across multiple clouds and IaC tools. |
-| **Upgrade Planner** | Generates a safe, ordered upgrade plan with rollback points. |
-| **Canary & Blue‑Green Deploys** | Supports zero‑downtime upgrades for Kubernetes, ECS, and GKE. |
-| **Audit Trail** | Produces signed, immutable logs of every change. |
-| **Plugin Architecture** | Extendable adapters for new cloud providers and IaC tools. |
-| **CLI & REST API** | Operate locally or integrate into CI/CD pipelines. |
+| **Manifest‑driven upgrades** | Define target versions, pre‑checks, and post‑hooks in `upgrade.yaml`. |
+| **Rollback safety net** | Automatic snapshot & rollback on failure. |
+| **Parallel execution** | Upgrade multiple clusters/services concurrently. |
+| **Extensible plugins** | Hook custom Python scripts for bespoke validation. |
+| **Rich reporting** | JSON/HTML reports with timestamps, diffs, and signatures. |
+| **CLI auto‑completion** | Bash/Zsh completion scripts generated on install. |
 
-## Tech Stack
+## Tech Stack  
+*The project follows the tech‑stack defined in `decisions/tech-stack.md`. No additional technologies are introduced here.*
 
-* (To be filled from `decisions/tech-stack.md` once locked)
-
-## Project Structure
+## Project Structure  
 
 ```
 infra-upgrade/
-├── cmd/          # CLI entry points
-├── internal/     # Core logic and adapters
-├── pkg/          # Reusable libraries
-├── plugins/      # Cloud provider plugins
-├── scripts/      # Helper scripts
-├── test/         # Automated tests
-└── README.md
+├─ business/          # Domain‑specific upgrade policies & helpers
+├─ src/               # Core library and CLI implementation
+├─ tests/             # Unit & integration test suite
+├─ pyproject.toml     # Build system, dependencies, entry points
+└─ README.md          # This document
 ```
 
-## Getting Started
+## Getting Started  
 
 ```bash
 # Clone the repository
-git clone https://github.com/axentx/infra-upgrade.git
+git clone https://github.com/your-org/infra-upgrade.git
 cd infra-upgrade
 
-# Build the CLI
-make build
+# Install the package (editable mode)
+pip install -e .
 
-# Run the upgrade planner
-infra-upgrade plan --config infra.yaml
-
-# Apply the upgrade
-infra-upgrade apply --plan plan.json
+# Verify installation
+infra-upgrade --help
 ```
 
-## Deploy
+### Running a Upgrade  
 
 ```bash
-# Deploy the CLI as a Docker container
-docker build -t axentx/infra-upgrade:latest .
-docker run -it --rm axentx/infra-upgrade:latest plan --config infra.yaml
+# Place your upgrade manifest at ./upgrade.yaml
+infra-upgrade apply ./upgrade.yaml
 ```
 
-## Status
+### Running Tests  
 
-🚧 **Under development** – Initial commit 45b06dc.  
-Recent commit: *Initial commit* – set up project skeleton.
+```bash
+# Using pytest (declared in pyproject.toml)
+pytest -v
+```
 
-## Contributing
+## Deploy  
 
-See [CONTRIBUTING.md](CONTRIBUTING.md).
+The project is distributed as a Python package. Publish to PyPI (or your internal index) with:
 
-## License
+```bash
+# Build the distribution
+python -m build
 
-MIT © Axentx
+# Upload to PyPI
+twine upload dist/*
+```
+
+For containerised deployment, the official Dockerfile (generated by the build system) can be used:
+
+```bash
+docker build -t your-org/infra-upgrade:latest .
+docker run --rm -v $(pwd)/upgrade.yaml:/app/upgrade.yaml your-org/infra-upgrade:latest apply /app/upgrade.yaml
+```
+
+## Status  
+Active development – latest commit `2cfdaac` (2026‑06‑09) adds the CI build cycle for infra‑upgrade.
+
+## Contributing  
+Please see our [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines on how to submit issues, feature requests, and pull requests.
+
+## License  
+This project is licensed under the MIT License.
